@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'remeda';
 import { FileInputWrapper, FileInputZone } from '.';
 
 const withPreventDefault = (handler: (e: any) => void) => (e: any) => {

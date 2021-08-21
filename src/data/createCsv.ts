@@ -1,7 +1,7 @@
 import { ManagerName, Volunteers } from './mockData';
 import * as R from 'remeda';
 
-const months = [
+export const months = [
 	'April',
 	'May',
 	'June',
@@ -16,7 +16,7 @@ const months = [
 	'March',
 ];
 
-// const identityFn: <T>(x: T) => T = (x) => x;
+export const headers = ['ID', 'volunteer name', 'volunteer role', ...months];
 
 const filePrefix = 'data:text/csv;charset=utf-8,';
 
@@ -38,12 +38,13 @@ export const createCsvByManager =
 	(managerName: string) => (volunteers: Record<ManagerName, Volunteers>) => {
 		const volunteersToInclude = volunteers[managerName];
 		const vols = R.values(volunteersToInclude);
-		const headers = ['volunteer name', 'volunteer role', ...months];
+		const volIds = R.keys(volunteersToInclude);
 		console.log(`got headers >>>>`, headers);
-		const rows = vols.map((v) => [
+		const rows = vols.map((v, index) => [
+			`${volIds[index]}`,
 			`${v.firstName} ${v.lastName}`,
 			v.roleName,
-			...R.times(() => ' ')(months.length),
+			...R.times(() => '')(months.length),
 		]);
 		console.log(`got rows>>>>>`, rows);
 		const csvAsArray = [headers, ...rows];
